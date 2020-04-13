@@ -6,9 +6,17 @@ import time
 import sys
 from selenium import webdriver
 
-__cookie_json__ = r"F:\VS Code\workspace\python\datamining\weibo\cookies.json"
 __data__ = sys.path[0] + r'\data'
 
+# 别忘了在这里改用户名和密码
+# 其实这里可以把用户名和密码封装成类的属性
+# 但是我懒
+# 主要是涉及到好几个函数需要改
+# 如果在这里改动执行不通过的话
+# 就把下面
+
+__username__ = ''
+__password__ = ''
 
 class TopicSearch():
     def __init__(self, keyword: str):
@@ -134,6 +142,7 @@ class TopicSearch():
         '''
         跳转到微博界面并登录，为保证成功登录，程序会在登录前暂停45秒，在登录后暂停10秒
         '''
+        global __username__, __password__
         time.sleep(45)
         driver = self.driver
         print("Info:    Logging in...")
@@ -141,9 +150,9 @@ class TopicSearch():
         while True:
             try:
                 driver.find_element_by_xpath('//*[@id="loginname"]').send_keys(
-                    '15010653188')
+                    __username__)
                 driver.find_element_by_xpath(
-                    '//*[@id="pl_login_form"]/div/div[3]/div[2]/div/input').send_keys('huangfu')
+                    '//*[@id="pl_login_form"]/div/div[3]/div[2]/div/input').send_keys(__password__)
                 driver.find_element_by_xpath(
                     '//*[@id="pl_login_form"]/div/div[3]/div[6]/a').click()
                 driver.find_element_by_xpath(
