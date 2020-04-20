@@ -1,3 +1,4 @@
+import os
 import requests
 import re
 import json
@@ -52,18 +53,9 @@ class TopicSearch():
         else:
             print("OK")
 
-    def dumpToFile(self):
-        indexList = []
-        global __data__
-        for post in self.postContent:
-            fileName = str(post['id'])
-            indexList.append(post['id'])
-            with open(__data__ + '\\' + fileName + '.json', 'w', encoding='utf-8') as file:
-                json.dump(post, file, ensure_ascii=False)
-        with open(__data__ + '\\index.json', 'w', encoding='utf-8') as file:
-            json.dump(indexList, file, ensure_ascii=False)
-
     def saveStatus(self):
+        if not os.path.exists(sys.path[0] + r'\autosave'):
+            os.makedirs(sys.path[0] + r'\autosave')
         with open(self.autoSave, 'w', encoding='utf-8') as file:
             json.dump({
                 'topicPage': self.topicPage,
